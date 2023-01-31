@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 import requests
 import telegram
@@ -29,10 +30,19 @@ def main():
     url = 'https://dvmn.org/api/long_polling/'
     params = {'timestamp': ''}
     headers = {'Authorization': f'Token {dvmn_token}'}
+    waiting_time = 30
     while True:
         try:
             response = requests.get(url, params=params, headers=headers)
-        except (requests.exceptions.ReadTimeout, ConnectionError):
+            waiting_time = 30 # время ожидания в секундах перед запросом в случае проблем с сетью
+        except requests.exceptions.ReadTimeout:
+            continue
+        except ConnectionError:
+            time.sleep(waiting_time)
+            if waiting_time < 7200:
+                waiting_time *= 1.2
+                # время ожидания перед каждым последующим запросом будет
+                # увеличивается на 20%, пока не достигнет 2 часов
             continue
         response.raise_for_status()
         review_information = response.json()
