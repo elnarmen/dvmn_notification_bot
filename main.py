@@ -37,7 +37,7 @@ def main():
         response.raise_for_status()
         review_information = response.json()
         params = {
-            'timestamp': review_information['timestamp_to_request']
+            'timestamp': review_information.get('timestamp_to_request', '')
         }
         if review_information['status'] == 'found':
             for attempt in review_information['new_attempts']:
