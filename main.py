@@ -7,10 +7,10 @@ import telegram
 def send_message(bot, chat_id, lesson_title, is_negative_result, lesson_url):
     text = f'У вас проверили работу "{lesson_title}".'
 
-    text += [
-        '\nПреподователю все понравилось. Можно приступать к следущему уроку!',
-        '\nК сожалению, в работе нашлись ошибки.',
-        ][is_negative_result]
+    if is_negative_result:
+        text += '\nК сожалению, в работе нашлись ошибки.'
+    else:
+        text += '\nПреподователю все понравилось. Можно приступать к следущему уроку!'
 
     text += f'\nСсылка на урок: {lesson_url}'
 
