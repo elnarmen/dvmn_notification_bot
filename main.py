@@ -32,16 +32,16 @@ def main():
     while True:
         response = requests.get(url, params=params, headers=headers)
         response.raise_for_status()
-        decoded_response = response.json()
-        if decoded_response['status'] == 'timeout':
+        review_information = response.json()
+        if review_information['status'] == 'timeout':
             params = {
-                'timestamp': decoded_response['timestamp_to_request']
+                'timestamp': review_information['timestamp_to_request']
             }
             response = requests.get(url, params=params, headers=headers)
             response.raise_for_status()
-            decoded_response = response.json()
-        if decoded_response['status'] == 'found':
-            for attempt in decoded_response['new_attempts']:
+            review_information = response.json()
+        if review_information['status'] == 'found':
+            for attempt in review_information['new_attempts']:
                 lesson_title = attempt['lesson_title']
                 is_negative_result = attempt['is_negative']
                 lesson_url = attempt['lesson_url']
