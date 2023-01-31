@@ -37,9 +37,6 @@ def main():
             params = {
                 'timestamp': review_information['timestamp_to_request']
             }
-            response = requests.get(url, params=params, headers=headers)
-            response.raise_for_status()
-            review_information = response.json()
         if review_information['status'] == 'found':
             for attempt in review_information['new_attempts']:
                 lesson_title = attempt['lesson_title']
