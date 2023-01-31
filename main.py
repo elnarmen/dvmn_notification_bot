@@ -30,7 +30,10 @@ def main():
     params = {'timestamp': ''}
     headers = {'Authorization': f'Token {dvmn_token}'}
     while True:
-        response = requests.get(url, params=params, headers=headers)
+        try:
+            response = requests.get(url, params=params, headers=headers)
+        except (requests.exceptions.ReadTimeout, ConnectionError):
+            continue
         response.raise_for_status()
         review_information = response.json()
         if review_information['status'] == 'timeout':
@@ -50,7 +53,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except (requests.exceptions.ReadTimeout, ConnectionError):
-        main()
+    main()
