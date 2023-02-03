@@ -49,6 +49,7 @@ source venv/bin/activate
 TELEGRAM_TOKEN=<Токен для основного бота>
 
 LOGS_TELEGRAM_BOT_TOKEN = <Токен для бота логов>
+
 ```
 
 #### CHAT_ID
