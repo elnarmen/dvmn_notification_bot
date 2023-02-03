@@ -37,15 +37,18 @@ source venv/bin/activate
 #### DVMN_TOKEN
 * Скопируйте ваш токен на сайте [https://dvmn.org/api/docs/](https://dvmn.org/api/docs/)
 
-#### TELEGRAM_TOKEN
+#### TELEGRAM_BOT_TOKEN и LOGS_TELEGRAM_BOT_TOKEN
 
 * Через поиск телеграм найдите бот @BotFather. 
 * Отправьте /start для получения списока всех его команд.
 * Выберите команду /newbot - бот попросит придумать имя вашему новому боту. 
-* Сохраните полученный токен в переменной `TELEGRAM_TOKEN` в файле `.env`:
+Необходимо создать два бота - основной бот и бот, который будет получать сообщения о логах
+* Сохраните полученные токены в переменных `TELEGRAM_BOT_TOKEN` и LOGS_TELEGRAM_BOT_TOKEN в файле `.env`:
 
 ```
-TELEGRAM_TOKEN=<Ваш телеграм токен>
+TELEGRAM_TOKEN=<Токен для основного бота>
+
+LOGS_TELEGRAM_BOT_TOKEN = <Токен для бота логов>
 ```
 
 #### CHAT_ID
