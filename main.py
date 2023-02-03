@@ -38,7 +38,8 @@ def main():
     load_dotenv()
 
     dvmn_token = os.getenv('DVMN_TOKEN')
-    telegram_token = os.getenv('TELEGRAM_TOKEN')
+    telegram_token = os.getenv('TELEGRAM_BOT_TOKEN')
+    logs_bot_token = os.getenv('LOGS_TELEGRAM_BOT_TOKEN')
     chat_id = os.getenv('CHAT_ID')
 
     url = 'https://dvmn.org/api/long_polling/'
@@ -47,10 +48,10 @@ def main():
     waiting_time = 30
 
     bot = telegram.Bot(token=telegram_token)
-
+    logs_bot = telegram.Bot(token=logs_bot_token)
     logger = logging.getLogger("bot_logger")
     logger.setLevel(logging.INFO)
-    logger.addHandler(TelegramLogsHandler(bot, chat_id))
+    logger.addHandler(TelegramLogsHandler(logs_bot, chat_id))
     logger.info("Бот запущен")
 
     while True:
