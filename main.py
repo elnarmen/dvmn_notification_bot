@@ -7,6 +7,9 @@ import requests
 import telegram
 
 
+logger = logging.getLogger('bot_logger')
+
+
 class TelegramLogsHandler(logging.Handler):
     def __init__(self, bot, chat_id):
         super().__init__()
@@ -49,30 +52,30 @@ def main():
 
     bot = telegram.Bot(token=telegram_token)
     logs_bot = telegram.Bot(token=logs_bot_token)
-    logger = logging.getLogger("bot_logger")
     logger.setLevel(logging.INFO)
     logger.addHandler(TelegramLogsHandler(logs_bot, chat_id))
+
     logger.info("Бот запущен")
 
     while True:
         try:
             response = requests.get(url, params=params, headers=headers)
+            response.raise_for_status()
             waiting_time = 30 # время ожидания в секундах перед запросом в случае проблем с сетью
         except requests.exceptions.ReadTimeout:
             continue
-        except ConnectionError:
-            logger.error('Ошибка подключения к серверу')
+        except ConnectionError as err:
+            logger.exception(err)
             time.sleep(waiting_time)
             if waiting_time < 7200:
                 waiting_time *= 1.2
                 # время ожидания перед каждым последующим запросом будет
                 # увеличивается на 20%, пока не достигнет 2 часов
             continue
-        except:
-            logger.error(traceback.format_exc())
+        except Exception as err:
+            logger.exception(err)
             continue
 
-        response.raise_for_status()
         review_information = response.json()
         params = {
             'timestamp': review_information.get('timestamp_to_request', '')
