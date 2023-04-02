@@ -62,9 +62,19 @@ CHAT_ID=<Ваш chat_id>
 ```
 
 
-## Запуск бота
-Для запуска введите команду:
+## Запуск бота в Docker
+Docker уже должен быть установлен на вашем сервере.
+Инструкция по установке: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
+Перейдите в папку с проектом и создайте образ с помощью команды:
 ```
-python main.py
+docker build -t notification_bot .
 ```
+
+Запустите Docker-контейнер:
+```
+docker run --env-file .env notification_bot
+```
+
+Чтобы контейнер продолжал работать после выхода из командной строки, добавьте флаг `-d` (daemon mode). 
+Чтобы контейнер перезапускался при перезагрузке сервера, добавьте флаг `--restart alway`
