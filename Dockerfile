@@ -1,0 +1,13 @@
+FROM python:3.10
+
+WORKDIR /app
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV DVMN_TOKEN=${DVMN_TOKEN}
+ENV LOGS_TELEGRAM_BOT_TOKEN=${LOGS_TELEGRAM_BOT_TOKEN}
+ENV TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+ENV CHAT_ID=${CHAT_ID}
+
+CMD ["python", "main.py"]
