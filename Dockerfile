@@ -1,9 +1,13 @@
 FROM python:3.10
 
-WORKDIR /app
-COPY . .
+COPY requirements.txt /opt/app/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /opt/app
+
+RUN pip install -r requirements.txt
+
+COPY . /opt/app
+
 
 ENV DVMN_TOKEN=${DVMN_TOKEN}
 ENV LOGS_TELEGRAM_BOT_TOKEN=${LOGS_TELEGRAM_BOT_TOKEN}
